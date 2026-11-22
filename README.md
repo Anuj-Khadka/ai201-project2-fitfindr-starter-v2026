@@ -59,24 +59,67 @@
 
 ### `search_listings`
 
-- **What it does:**
+- **What it does:** Searches the 40 listings for items whose text matches the
+  description, optionally narrowing by size and a price ceiling, and returns the
+  best matches ranked by keyword overlap.
+
+- **Size match rule:** case-insensitive *token* match. The listing's `size` is
+  split on `/`, spaces, and parentheses into tokens; an item matches if the
+  requested size equals one of those tokens exactly. So "M" matches `"S/M"` and
+  `"M/L"` but not `"XL"` or `"US 7"`. This avoids substring false-positives like
+  `"l" in "xl"`.
+  
 - **Inputs:** <!-- name and type each: `max_price` (float), not "a price" -->
-- **Returns:**
-- **When it has nothing:**
+`description` (str) — keywords like "vintage graphic tee";
+`size` (str or None) — e.g. "M", or None to skip size filtering;
+`max_price` (float or None) — inclusive ceiling, or None to skip.
+
+- **Returns:** A `list[dict]`, best match first, at most `SEARCH_RESULT_LIMIT`
+  (10). Each dict is a full listing with `id, title, description, category,
+  style_tags, size, condition, price (float), colors, brand (str or None),
+  platform`.
+
+- **When it has nothing:** Returns an empty list `[]` — not `None`, not an
+  exception. This is the value the planning loop branches on.
+
+
 
 ### `suggest_outfit`
 
-- **What it does:**
-- **Inputs:**
-- **Returns:**
-- **When it has nothing:**
+- **What it does:** Takes one thrifted item and the user's wardrobe and asks the
+  model for one or two outfits built around that item.
+
+
+- **Inputs:** 
+`new_item` (dict) — a single listing dict from `search_listings`;
+`wardrobe` (dict) — has an `items` key holding a list of wardrobe items, which
+  may be empty.
+
+- **Returns:** A non-empty `str` of outfit suggestions. With a non-empty
+  wardrobe it names pieces the user already owns; with an empty wardrobe it
+  returns general styling advice for the item.
+
+- **When it has nothing:** On an empty wardrobe (`items == []`) it returns
+  general advice rather than "" or an error.
+
+
+
 
 ### `create_fit_card`
 
-- **What it does:**
-- **Inputs:**
-- **Returns:**
-- **When it has nothing:**
+- **What it does:** Writes a short social-post caption (2–4 sentences) about the
+  item and the suggested outfit.
+
+- **Inputs:** 
+`outfit` (str) — the suggestion from `suggest_outfit`;
+`new_item` (dict) — the same listing dict.
+
+- **Returns:** A `str` of 2–4 sentences that names the item, its price, and its
+  platform once each, and reads like a post rather than a product description.
+  Varies run to run (TEMPERATURE 0.9, cache off during eval).
+
+- **When it has nothing:** If `outfit` is empty or whitespace, returns a short
+  descriptive message rather than raising.
 
 ---
 
@@ -93,13 +136,22 @@
      The grader checks your code against what you claim here, so the file and
      function have to be real. -->
 
-**Branch rule:**
+
+**Branch rule:** If `search_listings` returns an empty list, put a message in
+`session["error"]` naming what the user could change (price, size, or keywords)
+and return immediately — do **not** call `suggest_outfit`. Otherwise, take the
+first result as `session["selected_item"]` and continue to `suggest_outfit`,
+then `create_fit_card`.
 
 **Where it lives:** `agent.py::run_agent`
 
-**How the query is parsed:** <!-- regex, string splitting, or asking the model — say which -->
+**How the query is parsed:** String/regex parsing (no model call). A `$NN` or
+"under NN" sets `max_price`; "size X" sets `size`; the remaining words are the
+description. Deterministic so the same query parses the same way every run.
 
-**What moves through the session:** <!-- which fields, in what order -->
+**What moves through the session:** `query` → `parsed` (description/size/
+max_price) → `search_results` → `selected_item` → `outfit_suggestion` →
+`fit_card`, each written to the session before the next tool reads it back out.
 
 ---
 
