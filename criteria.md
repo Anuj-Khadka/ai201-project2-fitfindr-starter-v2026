@@ -28,6 +28,10 @@ tool calls and returns a fit card — in at least 4 of 5 tries.
 <!-- Why 4 of 5 and not 5 of 5? Something about your search, probably —
      "my search is a plain keyword match and some phrasings will miss" is a
      real answer. -->
+My search is keyword-overlap scoring plus exact-token size matching, so phrasing
+like "tee" vs "graphic tee", or "medium" vs "M", will miss some real matches. 4 of 5 
+reflects a plain keyword search, not a semantic one.
+
 
 ---
 
@@ -41,6 +45,10 @@ Given a query that matches no listings, the agent stops before calling
      about this path? -->
 
 ---
+The empty-search branch is a deterministic code path — `if not search_results:
+stop` — not a model call, so it either fires every time or it's broken. 5 of 5
+is the only honest target for a pure branch.
+
 
 ## 3. Something about state
 
@@ -54,10 +62,15 @@ Given a query that matches no listings, the agent stops before calling
      compares session["selected_item"] against what actually reached
      suggest_outfit is the shape you're after. -->
 
-
+Across 5 matching quries, the `id` in `session["selected_item"]` is identical
+to the `id` of the `new_item` that `suggest_outfit` received - 5 of 5.
 
 **Why this target:**
-
+The item isn't re-chosen or re-searched between steps `run_agent` writes the 
+first result into the session once and the next tool reads it back out. Because
+that handoff is plain assignment, not a model call, there is no reason it should 
+ever drift, so 5 of 5 is the honest bar. If the ids divergesd, state leaked (a stray
+variable or a second search) and comparing the ids is what catches it.
 
 
 ---
@@ -75,10 +88,15 @@ Given a query that matches no listings, the agent stops before calling
      sentence? A card longer than a caption anyone would post? Any of those can
      be turned into a number. -->
 
+In 4 of 5 runs on the same item, the fit card contains the item's price as a number (eg. $18)
 
 
 **Why this target:**
-
+The card runs at TEMPERATURE 0.9, so the wording changes every run- that's wanted. 
+It is a caption, not a template. But a caption that forgets the price is useless to
+a thrift shopper, so the price is the one thing that must survive the variation. 4 of 5
+and not 5 of 5 because at that temperature the model will occasionally drop it, and I would 
+rather set a number I can actually miss that one I cannot.
 
 
 ---
@@ -91,11 +109,14 @@ Given a query that matches no listings, the agent stops before calling
      wardrobe path, what happens when the model can't be reached, whether the
      search respects a price ceiling — anything, as long as it names a number
      or an observable outcome. -->
-
+For 5 queries with a price ceiling (eg. "under $30"), every item in `session["search_results"]` 
+has `price` <= the ceiling - 5 of 5.
 
 
 **Why this target:**
-
+Unlike the keyword match, which is fuzzy and will miss some phrasings, the price filter
+is an exact numeric comparison (`price <= max_price`). A fuzzy step earns a 4 of 5 target. 
+A hard numeric one has no excuse to ever let an over-budget item through. So 5 of 5.
 
 
 ---
