@@ -44,11 +44,11 @@ Given a query that matches no listings, the agent stops before calling
 <!-- Why is 5 of 5 reasonable here when criterion 1 isn't? What's different
      about this path? -->
 
----
 The empty-search branch is a deterministic code path — `if not search_results:
 stop` — not a model call, so it either fires every time or it's broken. 5 of 5
 is the only honest target for a pure branch.
 
+---
 
 ## 3. Something about state
 

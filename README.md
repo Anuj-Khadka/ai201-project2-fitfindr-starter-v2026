@@ -41,7 +41,12 @@
 
 <!-- Three or four sentences: what a user asks for, and what they get back. -->
 
-
+This app takes a plain-language request for a thrifted item like a vintage graphic tee
+under $30 and turns it into a styled recommendation. It searches 40 mock listings by keywords,
+size, and a price ceiling, then picks the top match. It asks a model to build one or two outfits 
+around that item using the user's existing wardrobe, then writes a short social-media caption 
+about the find. If nothing matches, it stops and tells the user what to change instead of 
+inventing an outfit for an item that does not exist.
 
 ---
 
@@ -331,15 +336,30 @@ No outfit suggestion was provided, so there's nothing to caption yet.
 
 **Moment 1**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* Help filtering listings by size.
+
+- *What came back:* A warning that a plain substring check is wrong i.e `"l" in
+  "xl"` and `"s" in "us 7"` are both True — plus a token-match approach: split
+  the size on `/`, spaces, and parens and match exact tokens.
+
+- *What I changed:* Adopted token matching instead of substring, and wrote the
+  rule into my Tool Inventory so criterion 1 could rely on it.
 
 **Moment 2**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* To build `run_agent` following my branch rule.
+
+- *What came back:* A loop that writes each result into the session and reads it
+  back out, with the empty-search branch returning before `suggest_outfit`.
+
+- *What I changed:* I'd pasted the query parser nested inside `run_agent`; I kept
+  it there and wired the loop to call it, then moved it to module level and ran
+  both example paths to confirm the impossible query stopped with `fit_card`
+  still None.
+
+
+
+
 
 <!-- ═══════════════════════ UNIT 4 — THE TEST ═══════════════════════
 
