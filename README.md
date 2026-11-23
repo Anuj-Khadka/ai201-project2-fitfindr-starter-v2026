@@ -174,16 +174,65 @@ $ python app.py ask '...'
 ```
 $ python -c "from tools import search_listings; print(search_listings('graphic tee', max_price=30))"
 
+$ python -c "from tools import search_listings; print(search_listings('graphic tee', max_price=30))"
+[{'id': 'lst_002', 'title': 'Y2K Baby Tee — Butterfly Print', 'description': 'Super cute early 2000s baby tee with butterfly graphic. Fitted crop length. Tag says medium but fits like a small.', 'category': 'tops', 'style_tags': ['y2k', 'vintage', 'graphic tee', 'cottagecore'], 'size': 'S/M', 'condition': 'excellent', 'price': 18.0, 'colors': ['white', 'pink', 'purple'], 'brand': None, 'platform': 'depop'}, {'id': 'lst_006', 'title': 'Graphic Tee — 2003 Tour Bootleg Style', 'description': 'Vintage-style bootleg tee with faded graphic. Slightly boxy fit. 100% cotton, soft and worn-in.', 'category': 'tops', 'style_tags': ['graphic tee', 'vintage', 'grunge', 'streetwear', 'band tee'], 'size': 'L', 'condition': 'good', 'price': 24.0, 'colors': ['black'], 'brand': None, 'platform': 'depop'}, {'id': 'lst_017', 'title': 'Mesh Long-Sleeve Top — Black', 'description': 'Sheer black mesh long-sleeve. Great for layering under a graphic tee or over a bralette. Stretchy material, fits true to size.', 'category': 'tops', 'style_tags': ['y2k', 'grunge', 'goth', 'layering'], 'size': 'S/M', 'condition': 'excellent', 'price': 15.0, 'colors': ['black'], 'brand': None, 'platform': 'depop'}, {'id': 'lst_033', 'title': 'Vintage Band Tee — Faded Grey', 'description': 'Faded grey band-style tee with distressed graphic. Crew neck. Fits boxy. Well-loved but no holes or major damage.', 'category': 'tops', 'style_tags': ['vintage', 'grunge', 'band tee', 'graphic tee', 'streetwear'], 'size': 'L', 'condition': 'fair', 'price': 19.0, 'colors': ['grey', 'charcoal'], 'brand': None, 'platform': 'depop'}, {'id': 'lst_011', 'title': 'Low-Rise Cargo Pants — Khaki', 'description': 'Y2K era low-rise cargo pants. Lots of pockets. Khaki color, slightly distressed at the hems. Great for layering with a long tee.', 'category': 'bottoms', 'style_tags': ['y2k', 'cargo', '2000s', 'streetwear'], 'size': 'W29', 'condition': 'fair', 'price': 27.0, 'colors': ['khaki', 'tan'], 'brand': None, 'platform': 'poshmark'}, {'id': 'lst_012', 'title': 'Oversized Crewneck Sweatshirt — Vintage Navy', 'description': 'Perfectly faded navy crewneck. Genuinely vintage — not manufactured distressed. Ribbed cuffs and hem. No graphics, clean.', 'category': 'tops', 'style_tags': ['vintage', 'basics', 'oversized', 'classic'], 'size': 'XL (fits oversized)', 'condition': 'good', 'price': 20.0, 'colors': ['navy'], 'brand': None, 'platform': 'thredUp'}, {'id': 'lst_015', 'title': 'Vintage Graphic Hoodie — Faded Black', 'description': 'Faded black pullover hoodie with barely-visible vintage graphic on the chest. Cozy interior. Some pilling but adds to the worn-in look.', 'category': 'tops', 'style_tags': ['vintage', 'grunge', 'graphic', 'streetwear'], 'size': 'L', 'condition': 'fair', 'price': 26.0, 'colors': ['black', 'charcoal'], 'brand': None, 'platform': 'depop'}]
+
 ```
+
+```
+$ python -c "from tools import search_listings; print(search_listings('designer ballgown', max_price=5))"
+[]
+```
+
 
 ```
 $ python -c "from tools import suggest_outfit; ..."
 
+$ python  -c "from tools import suggest_outfit; from utils.data_loader import get_example_wardrobe, load_listings; print(suggest_outfit(load_listings()[0], get_example_wardrobe()))"
+Hey there! Those Vintage Levi's 501 Jeans are an absolute holy grail find—that medium wash with the natural knee fading is timeless and so easy to style. 
+
+Since the 501s have that classic, slightly structured straight-leg fit, we can play with proportions using what you already have in your closet. Here are two effortless thrift-inspired looks featuring your new Levi's:
+
+### Outfit 1: Casual Streetwear Layering
+*This look leans into the vintage-meets-streetwear vibe, balancing fitted and oversized pieces for an effortless everyday fit.*
+
+* **Top 1:** **White ribbed tank top** (tucked into the jeans to define the waist)
+* **Outerwear:** **Oversized grey crewneck sweatshirt** layered right over the tank, or draped loosely over your shoulders
+* **Shoes:** **Chunky white sneakers** to keep it grounded and sporty
+* **Accessories:** **Black crossbody bag** and a **Brown leather belt** to tie the denim and hardware together
+
+### Outfit 2: Edgy Denim-on-Denim
+*Double denim is having a massive moment, and contrasting the medium wash 501s with black denim creates a cool, moody contrast.*
+
+* **Top:** **Black cropped zip hoodie** worn zipped up partway
+* **Outerwear:** **Vintage black denim jacket** layered on top for a textured, monochromatic top-half
+* **Shoes:** **Black combat boots** to add some attitude and toughen up the medium wash denim
+* **Accessories:** **Black crossbody bag** 
+
+Which vibe are you leaning toward first?
 ```
+
+```
+$ python -c "from tools import suggest_outfit; from utils.data_loader import get_empty_wardrobe, load_listings; print(suggest_outfit(load_listings()[0], get_empty_wardrobe()))"
+For an effortless, off-duty streetwear look, pair those vintage 501s with an oversized graphic tee tucked in loosely, a black leather belt, and retro white sneakers. Alternatively, lean into a classic vintage aesthetic by styling them with a tucked-in ribbed white tank top, an unbuttoned oversized flannel or corduroy overshirt, and well-worn leather boots.
+
+```
+
+
+
+
+
 
 ```
 $ python -c "from tools import create_fit_card; ..."
 
+$ python -c "from tools import create_fit_card; from utils.data_loader import load_listings; print(create_fit_card('baggy jeans and white sneakers', load_listings()[0]))"
+Found my holy grail medium wash vintage Levi's 501s and I’m literally never taking them off. Snagged them for just $38.0 on depop. Can't wait to style them oversized with some fresh white sneakers for that effortless 90s look.
+```
+
+```
+$ python -c "from tools import create_fit_card; from utils.data_loader import load_listings; print(create_fit_card('   ', load_listings()[0]))"
+No outfit suggestion was provided, so there's nothing to caption yet.
 ```
 
 ---
