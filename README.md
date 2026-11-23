@@ -185,7 +185,9 @@ Here are two ways to style your new baby tee using items straight from your clos
 
 **Why it works:** The dark indigo wash of the jeans grounds the soft pink and purple tones of the tee, while the chunky sneakers and cropped hoodie lock in that authentic turn-of-the-millennium look.
 
+
 ---
+
 
 ### Outfit 2: Sweet & Edgy Mix (Cottagecore Meets Y2K)
 *Leaning into the cottagecore tag, this outfit pairs the sweet butterfly graphic with tougher, earthy pieces for a cool thrifted vibe.*
