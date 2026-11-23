@@ -167,6 +167,87 @@ max_price) → `search_results` → `selected_item` → `outfit_suggestion` →
 ```
 $ python app.py ask '...'
 
+$ python agent.py
+=== A query the data can match ===
+  found:    Y2K Baby Tee — Butterfly Print — $18.0 on depop
+  outfit:   Hey bestie! That Y2K butterfly baby tee is such a find—the pink and purple print gives major early-2000s pop star off-duty energy. Since the tee is a fitted crop, it's super easy to balance out with pieces you already have. 
+
+Here are two ways to style your new baby tee using items straight from your closet:
+
+### Outfit 1: Bratz Doll Casual (Y2K Streetwear)
+*This look plays on the contrast between the tight, girly top and ultra-baggy bottoms, which is the ultimate Y2K silhouette.*
+
+* **Top:** The new Y2K Butterfly Baby Tee
+* **Bottoms:** Baggy straight-leg jeans (dark wash)
+* **Outerwear:** Black cropped zip hoodie (wear it unzipped or slung off the shoulders so the butterfly graphic still pops)
+* **Shoes:** Chunky white sneakers
+* **Accessories:** Black crossbody bag 
+
+**Why it works:** The dark indigo wash of the jeans grounds the soft pink and purple tones of the tee, while the chunky sneakers and cropped hoodie lock in that authentic turn-of-the-millennium look.
+
+---
+
+### Outfit 2: Sweet & Edgy Mix (Cottagecore Meets Y2K)
+*Leaning into the cottagecore tag, this outfit pairs the sweet butterfly graphic with tougher, earthy pieces for a cool thrifted vibe.*
+
+* **Top:** The new Y2K Butterfly Baby Tee
+* **Bottoms:** Wide-leg khaki trousers 
+* **Outerwear:** Vintage black denim jacket
+* **Shoes:** Black combat boots
+* **Accessories:** Brown leather belt (loop this through the trousers to pull the khaki and earthy tones together)
+
+**Why it works:** The khaki trousers and brown belt soften the graphic tee, giving it a subtle vintage-cottagecore feel, while the black combat boots and distressed denim jacket add that signature thrift-store edge. 
+
+Which vibe are you wearing out first?
+  fit card: Still can’t believe I scored this Y2K butterfly baby tee for just $18. The pink and purple print is literally giving off-duty pop star. Definitely listing it on Depop before I change my mind and keep it for myself!
+
+=== A query it can't ===
+  stopped: No listings matched. Try raising your price ceiling above $5, or removing the size 'XXS' filter, or trying different keywords.
+  fit_card is None — it should still be None here
+
+The second one should stop before the fit card. If both paths look the same,
+the branch isn't doing anything yet.
+
+```
+
+```
+$ python app.py ask 'looking for a vintage graphic tee under $30'
+
+  Found:    Y2K Baby Tee — Butterfly Print — $18.0 on depop
+
+  Outfit:   Hey bestie! That Y2K butterfly baby tee is such a find—the pink and purple print gives major early-2000s pop star off-duty energy. Since the tee is a fitted crop, it's super easy to balance out with pieces you already have. 
+
+Here are two ways to style your new baby tee using items straight from your closet:
+
+### Outfit 1: Bratz Doll Casual (Y2K Streetwear)
+*This look plays on the contrast between the tight, girly top and ultra-baggy bottoms, which is the ultimate Y2K silhouette.*
+
+* **Top:** The new Y2K Butterfly Baby Tee
+* **Bottoms:** Baggy straight-leg jeans (dark wash)
+* **Outerwear:** Black cropped zip hoodie (wear it unzipped or slung off the shoulders so the butterfly graphic still pops)
+* **Shoes:** Chunky white sneakers
+* **Accessories:** Black crossbody bag 
+
+**Why it works:** The dark indigo wash of the jeans grounds the soft pink and purple tones of the tee, while the chunky sneakers and cropped hoodie lock in that authentic turn-of-the-millennium look.
+
+---
+
+### Outfit 2: Sweet & Edgy Mix (Cottagecore Meets Y2K)
+*Leaning into the cottagecore tag, this outfit pairs the sweet butterfly graphic with tougher, earthy pieces for a cool thrifted vibe.*
+
+* **Top:** The new Y2K Butterfly Baby Tee
+* **Bottoms:** Wide-leg khaki trousers 
+* **Outerwear:** Vintage black denim jacket
+* **Shoes:** Black combat boots
+* **Accessories:** Brown leather belt (loop this through the trousers to pull the khaki and earthy tones together)
+
+**Why it works:** The khaki trousers and brown belt soften the graphic tee, giving it a subtle vintage-cottagecore feel, while the black combat boots and distressed denim jacket add that signature thrift-store edge. 
+
+Which vibe are you wearing out first?
+
+  Fit card: Still can’t believe I scored this Y2K butterfly baby tee for just $18. The pink and purple print is literally giving off-duty pop star. Definitely listing it on Depop before I change my mind and keep it for myself!
+
+
 ```
 
 **The three tools, tested one at a time**
